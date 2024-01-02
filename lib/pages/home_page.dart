@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:my_portfolio/constants/colors.dart';
+import 'package:my_portfolio/constants/size.dart';
+import 'package:my_portfolio/widgets/drawer_mobile.dart';
+import 'package:my_portfolio/widgets/header_desktop.dart';
+import '../widgets/header_mobile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -9,70 +13,53 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: CustomColor.scaffoldBg,
-        body: ListView(
-          scrollDirection: Axis.vertical,
-          children: [
-            // Main
-            Container(
-              height: 60,
-              margin: EdgeInsets.symmetric(
-                vertical: 10,
-                horizontal: 20,
-              ),
-              width: double.maxFinite,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Colors.transparent,
-                    CustomColor.bgLight1,
-                  ],
+    return LayoutBuilder(builder: (context, constraints) {
+      return Scaffold(
+          key: scaffoldKey,
+          backgroundColor: CustomColor.scaffoldBg,
+          endDrawer: constraints.maxWidth >= kMinDesktopWidth
+              ? null
+              : const DrawerMobile(),
+          body: ListView(
+            scrollDirection: Axis.vertical,
+            children: [
+              // Main
+              if (constraints.maxWidth >= kMinDesktopWidth)
+                const HeaderDesktop()
+              else
+                HeaderMobile(
+                  onLogoTap: () {},
+                  onMenuTap: () {
+                    scaffoldKey.currentState?.openEndDrawer();
+                  },
                 ),
-                borderRadius: BorderRadius.circular(100),
+              // Skills
+              Container(
+                height: 500,
+                width: double.maxFinite,
+                color: Colors.blueGrey,
               ),
-              child: Row(
-                children: [
-                  Text("AK"),
-                  Spacer(),
-                  for (int i = 0; i < 5; i++)
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        right: 20,
-                      ),
-                      child: TextButton(
-                        onPressed: () {},
-                        child: const Text("button"),
-                      ),
-                    ),
-                ],
+              // PROJECTS
+              Container(
+                height: 500,
+                width: double.maxFinite,
               ),
-            ),
-            // Skills
-            Container(
-              height: 500,
-              width: double.maxFinite,
-              color: Colors.blueGrey,
-            ),
-            // PROJECTS
-            Container(
-              height: 500,
-              width: double.maxFinite,
-            ),
-            // Contact
-            Container(
-              height: 500,
-              width: double.maxFinite,
-              color: Colors.blueGrey,
-            ),
-            // Footer
-            Container(
-              height: 500,
-              width: double.maxFinite,
-            ),
-          ],
-        ));
+              // Contact
+              Container(
+                height: 500,
+                width: double.maxFinite,
+                color: Colors.blueGrey,
+              ),
+              // Footer
+              Container(
+                height: 500,
+                width: double.maxFinite,
+              ),
+            ],
+          ));
+    });
   }
 }
