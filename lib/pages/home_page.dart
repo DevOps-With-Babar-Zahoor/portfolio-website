@@ -16,6 +16,8 @@ class _HomePageState extends State<HomePage> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+    final screenWidth = screenSize.width;
     return LayoutBuilder(builder: (context, constraints) {
       return Scaffold(
           key: scaffoldKey,
@@ -36,6 +38,36 @@ class _HomePageState extends State<HomePage> {
                     scaffoldKey.currentState?.openEndDrawer();
                   },
                 ),
+              Container(
+                margin: const EdgeInsets.symmetric(
+                  horizontal: 20.0,
+                ),
+                height: screenSize.height / 1.3,
+                constraints: const BoxConstraints(
+                  minHeight: 350.0,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("Hi,\nI'm Shohruh AK\nA Flutter Developer"),
+                        ElevatedButton(
+                          onPressed: () {},
+                          child: const Text(
+                            "Get in Touch",
+                          ),
+                        ),
+                      ],
+                    ),
+                    Image.asset(
+                      "assets/my_flutter_avatar.png",
+                      width: screenWidth / 2,
+                    ),
+                  ],
+                ),
+              ),
               // Skills
               Container(
                 height: 500,
