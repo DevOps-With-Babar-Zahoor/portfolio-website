@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:my_portfolio/constants/colors.dart';
 import 'package:my_portfolio/constants/size.dart';
 import 'package:my_portfolio/widgets/drawer_mobile.dart';
 import 'package:my_portfolio/widgets/header_desktop.dart';
+import 'package:my_portfolio/widgets/main_mobile.dart';
 import '../widgets/header_mobile.dart';
+import '../widgets/main_desktop.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,12 +15,19 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
+//
+//
+// https://youtu.be/KGh_Suwdfl4?si=xtO5GZ-w38X-QQxb&t=380
+//
+//
+
 class _HomePageState extends State<HomePage> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     final screenWidth = screenSize.width;
+    final screenHeight = screenSize.height;
     return LayoutBuilder(builder: (context, constraints) {
       return Scaffold(
           key: scaffoldKey,
@@ -38,41 +48,32 @@ class _HomePageState extends State<HomePage> {
                     scaffoldKey.currentState?.openEndDrawer();
                   },
                 ),
-              Container(
-                margin: const EdgeInsets.symmetric(
-                  horizontal: 20.0,
-                ),
-                height: screenSize.height / 1.3,
-                constraints: const BoxConstraints(
-                  minHeight: 350.0,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text("Hi,\nI'm Shohruh AK\nA Flutter Developer"),
-                        ElevatedButton(
-                          onPressed: () {},
-                          child: const Text(
-                            "Get in Touch",
-                          ),
-                        ),
-                      ],
-                    ),
-                    Image.asset(
-                      "assets/my_flutter_avatar.png",
-                      width: screenWidth / 2,
-                    ),
-                  ],
-                ),
-              ),
+
+              if (constraints.maxWidth >= kMinDesktopWidth)
+                const MainDesktop()
+              else
+                const MainMobile(),
               // Skills
               Container(
-                height: 500,
                 width: double.maxFinite,
-                color: Colors.blueGrey,
+                padding: const EdgeInsets.fromLTRB(25, 20, 25, 60),
+                color: CustomColor.bgLight1,
+                child: const Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    //title
+                    Text(
+                      "What can I do",
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: CustomColor.whitePrimary,
+                      ),
+                    ),
+
+                    //platform and skills
+                  ],
+                ),
               ),
               // PROJECTS
               Container(
