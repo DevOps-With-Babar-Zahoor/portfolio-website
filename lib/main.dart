@@ -1,21 +1,38 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:my_portfolio/pages/home_page.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:my_portfolio/pages/home.dart';
+import 'package:url_strategy/url_strategy.dart';
+
 
 void main() {
-  runApp(const MyApp());
+  setPathUrlStrategy();
+  runApp(const ProviderScope(child: Ventura()));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-  
+class Ventura extends StatelessWidget {
+  const Ventura({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'Ventura',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark(),
-      title: 'BZ DevOps',
-      home: const HomePage(),
+      theme: ThemeData(
+        primarySwatch: Colors.green,
+      ),
+      scrollBehavior: MyCustomScrollBehavior(),
+      home: const Home(),
     );
   }
 }
 
+class MyCustomScrollBehavior extends MaterialScrollBehavior {
+  // Override behavior methods and getters like dragDevices
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+        PointerDeviceKind.touch,
+        PointerDeviceKind.mouse,
+        PointerDeviceKind.trackpad,
+      };
+}

@@ -3,7 +3,7 @@ import 'package:my_portfolio/constants/colors.dart';
 
 class SiteLogo extends StatelessWidget {
   const SiteLogo({
-    super.key,
+    Key? key,
     this.onTap,
   });
   final VoidCallback? onTap;
@@ -11,13 +11,13 @@ class SiteLogo extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: const Text(
-        "AK",
-        style: TextStyle(
-          fontSize: 22,
-          fontWeight: FontWeight.bold,
-          decoration: TextDecoration.underline,
-          color: CustomColor.yellowSecondary,
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(1, 1, 0, 0),
+        child: Image.asset(
+          "assets/python.png",
+          width: 88,
+          height: 88,
+          fit: BoxFit.contain,
         ),
       ),
     );
